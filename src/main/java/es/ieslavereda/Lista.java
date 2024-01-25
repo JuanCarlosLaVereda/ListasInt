@@ -1,9 +1,11 @@
 package es.ieslavereda;
 
-public class Lista {
+import java.lang.reflect.Array;
 
-    private Nodo head;
-    private Nodo tail;
+public class Lista<E> {
+
+    private Nodo<E> head;
+    private Nodo<E> tail;
     private int size;
 
     public Lista(){
@@ -12,7 +14,7 @@ public class Lista {
         size=0;
     }
 
-    public Lista(int[] elements){
+    public Lista(E[] elements){
         this();
         addAll(elements);
     }
@@ -21,8 +23,8 @@ public class Lista {
         return size;
     }
 
-    public void addHead(int elem){
-        Nodo nodo = new Nodo(elem);
+    public void addHead(E elem){
+        Nodo<E> nodo = new Nodo<>(elem);
         if (size==0){
             tail = nodo;
         } else {
@@ -32,8 +34,8 @@ public class Lista {
         size++;
     }
 
-    public void addTail(int elem){
-        Nodo nodo = new Nodo(elem);
+    public void addTail(E elem){
+        Nodo<E> nodo = new Nodo<>(elem);
         if (size==0){
             head = nodo;
         }else {
@@ -43,11 +45,11 @@ public class Lista {
         size++;
     }
 
-    public Integer removeHead(){
+    public E removeHead(){
         if (head==null){
             return null;
         }
-        int elem = head.getElem();
+        E elem = head.getElem();
         head = head.getSiguiente();
         if (head==null){
             head = null;
@@ -57,15 +59,15 @@ public class Lista {
         return elem;
     }
 
-    public Integer removeTail(){
+    public E removeTail(){
         if (tail==null){
             return null;
         }
         if (size==1){
             removeHead();
         }
-        int elem = tail.getElem();
-        Nodo nodoBeforeTail = head;
+        E elem = tail.getElem();
+        Nodo<E> nodoBeforeTail = head;
         for (int i=1; i<size-1; i++){
             nodoBeforeTail = nodoBeforeTail.getSiguiente();
         }
@@ -81,14 +83,14 @@ public class Lista {
         size=0;
     }
 
-    public boolean contains(int elem){
+    public boolean contains(E elem){
 /*        if (size==0){
             return false;
         }*/
         //No hace falta poner el size de arriba porque no entra en el for y no puede dar nullException
-        Nodo nodoAux = head;
+        Nodo<E> nodoAux = head;
         for (int i = 1; i < size; i++) {
-            if (nodoAux.getElem()==elem){
+            if (nodoAux.getElem().equals(elem)){
                 return true;
             }
             nodoAux = nodoAux.getSiguiente();
@@ -96,11 +98,11 @@ public class Lista {
         return false;
     }
 
-    public Integer get(int posiiton){
+    public E get(int posiiton){
         if (posiiton<0 || posiiton>=size || size==0){
             return null;
         }
-        Nodo nodoAux = head;
+        Nodo<E> nodoAux = head;
         for (int i = 0; i<posiiton ; i++) {
             nodoAux = nodoAux.getSiguiente();
         }
@@ -108,7 +110,7 @@ public class Lista {
 
     }
 
-    public Integer remove(int position){
+    public E remove(int position){
         if (position<0 || position>=size){
             return null;
         }
@@ -118,27 +120,27 @@ public class Lista {
         if (position==size-1){
             return removeTail();
         }
-        Nodo nodoAux = head.getSiguiente();
-        Nodo nodoBeforeAux = head;
+        Nodo<E> nodoAux = head.getSiguiente();
+        Nodo<E> nodoBeforeAux = head;
         for (int i = 1; i < position; i++) {
             nodoBeforeAux = nodoAux;
             nodoAux = nodoAux.getSiguiente();
         }
         nodoBeforeAux.setSiguiente(nodoAux.getSiguiente());
-        int elem = nodoAux.getElem();
+        E elem = nodoAux.getElem();
         size--;
         return elem;
     }
 
-    public void addAll(int[] elements){
-        for (int elem:elements) {
+    public void addAll(E[] elements){
+        for (E elem:elements) {
             addTail(elem);
         }
     }
 
-    public int[] getAsArray(){
-        int[] array = new int[size];
-        Nodo nodoAux = head;
+    public E[] getAsArray(Class clazz){
+        E[] array = (E[])Array.newInstance(clazz, size);
+        Nodo<E> nodoAux = head;
         for (int i = 0; i < array.length; i++) {
             array[i] = nodoAux.getElem();
             nodoAux = nodoAux.getSiguiente();
@@ -150,7 +152,7 @@ public class Lista {
 
     @Override
     public String toString(){
-        Nodo nodoAux = head;
+        Nodo<E> nodoAux = head;
         String aux = "Lista de elementos de tamaño: " + size() + "\n(";
         while (nodoAux!=null){
             aux+=nodoAux.getElem() + "->";
@@ -159,11 +161,11 @@ public class Lista {
         return aux + ")";
 
     }
-    private class Nodo{
-        private int elem;
-        private Nodo siguiente;
+    private class Nodo<E>{
+        private E elem;
+        private Nodo<E> siguiente;
 
-        public Nodo(int elem){
+        public Nodo(E elem){
             this.elem = elem;
             siguiente = null;
         }
@@ -172,13 +174,13 @@ public class Lista {
         public String toString(){
             return elem + "";
         }
-        public int getElem() {
+        public E getElem() {
             return elem;
         }
-        public Nodo getSiguiente() {
+        public Nodo<E> getSiguiente() {
             return siguiente;
         }
-        public void setSiguiente(Nodo nodo) {
+        public void setSiguiente(Nodo<E> nodo) {
             siguiente = nodo;
         }
     }
