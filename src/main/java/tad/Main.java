@@ -1,4 +1,4 @@
-package es.ieslavereda;
+package tad;
 
 import java.util.Arrays;
 

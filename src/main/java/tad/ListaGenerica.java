@@ -1,8 +1,10 @@
-package es.ieslavereda;
+package tad;
+
+import interfaces.ILista;
 
 import java.lang.reflect.Array;
 
-public class ListaGenerica<E> {
+public class ListaGenerica<E> implements ILista<E> {
 
     private Nodo<E> head;
     private Nodo<E> tail;
@@ -11,9 +13,10 @@ public class ListaGenerica<E> {
     public ListaGenerica(){
         head = null;
         tail = null;
-        size = 0;
+        size = INITIAL_SIZE;
     }
 
+    @Override
     public int size() {
         return size;
     }
@@ -24,6 +27,7 @@ public class ListaGenerica<E> {
         return tail;
     }
 
+    @Override
     public void addHead(E elem){
         Nodo<E> nodo = new Nodo<>(elem);
         if (size==0){
@@ -48,6 +52,7 @@ public class ListaGenerica<E> {
         tail = nodo;
     }
 
+    @Override
     public E removeHead(){
         if (head==null){
             return null;
@@ -92,7 +97,7 @@ public class ListaGenerica<E> {
     public void clear(){
         head=null;
         tail=null;
-        size=0;
+        size=INITIAL_SIZE;
     }
 
 /*    public boolean contains(String elem){
