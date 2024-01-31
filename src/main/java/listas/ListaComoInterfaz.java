@@ -1,14 +1,10 @@
 package listas;
 
-import tad.Persona;
-
-import java.lang.reflect.Array;
+import model.Persona;
 
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.time.LocalDate;
+import java.util.*;
 
 public class ListaComoInterfaz {
     //Declaro el objeto como clase, pero no es ok del to.do
@@ -29,9 +25,13 @@ public class ListaComoInterfaz {
         imprimir(listaLinked);
 
         List<Persona> listaPersona = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            listaPersona.add(new Persona(i+"A", "Persona" + i, "el que te cuento", i+18));
-        }
+/*        for (int i = 0; i < 4; i++) {
+            listaPersona.add(new Persona(i+"A", "Persona" + i, "el que te cuento", LocalDate.of(1999+i, 12, 23)));
+        }*/
+        listaPersona.add(new Persona("123567889", "zzzzzzzz", "zla que te cuento", LocalDate.of(2005, 12, 23)));
+        listaPersona.add(new Persona("123", "uno", "la que te cuento", LocalDate.of(1999, 11, 23)));
+        listaPersona.add(new Persona("1233", "auno", "la que te cuento", LocalDate.of(1999, 12, 23)));
+
 
 /*        for (Persona persona:listaPersona) {
             if (persona.getNombre().contains("o")){
@@ -43,7 +43,7 @@ public class ListaComoInterfaz {
         }*/
 
 
-        Iterator<Persona> iteradorPersona = listaPersona.iterator();
+/*        Iterator<Persona> iteradorPersona = listaPersona.iterator();
         Persona p;
         while (iteradorPersona.hasNext()){
             p = iteradorPersona.next();
@@ -51,9 +51,13 @@ public class ListaComoInterfaz {
                 iteradorPersona.remove();
             }
             System.out.println(p);
-        }
+        }*/
 
+        Collections.sort(listaPersona);
         System.out.println(listaPersona);
+        listaPersona.sort(Persona.SORT_BY_AGE);
+        System.out.println(listaPersona);
+
     }
 
     //NO TIENE SENTIDO REPETIR CODIGO!!!!!
